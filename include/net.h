@@ -101,7 +101,7 @@ namespace cat {
          * for events, then returns control to the caller.
 		 */
         virtual void poll() const = 0;
-    private:
+    public:
         // Host name or IP address for the listening endpoint
         const std::string host;
 
