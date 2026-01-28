@@ -37,8 +37,13 @@ project ( ARCHON
 )
 
 #
+# 外部庫編譯
+add_subdirectory ( external )
+
+#
 # 包含頭文件
 include_directories ( "${PROJECT_SOURCE_DIR}/include" )
+include_directories ( "${PROJECT_SOURCE_DIR}/external/enet/include" )
 
 #
 # 客戶端編譯
@@ -48,6 +53,7 @@ add_library ( DLL_CLIENT SHARED
   "${PROJECT_SOURCE_DIR}/src/client.cpp" 
 )
 target_compile_definitions ( DLL_CLIENT PRIVATE CLIENT_DLL )
+target_link_libraries ( DLL_CLIENT PRIVATE enet )
 set_target_properties ( DLL_CLIENT PROPERTIES OUTPUT_NAME "csovmware" )
 
 #
@@ -57,6 +63,7 @@ add_executable ( EXE_SERVER
   "${PROJECT_SOURCE_DIR}/src/core.cpp" 
   "${PROJECT_SOURCE_DIR}/src/server.cpp" 
 )
+target_link_libraries ( EXE_SERVER PRIVATE enet )
 set_target_properties ( EXE_SERVER PROPERTIES 
   OUTPUT_NAME "csovmware_server" 
   LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:CONSOLE" 
