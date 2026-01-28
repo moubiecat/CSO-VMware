@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include <enet/enet.h>
 #include "core.h"
+#include "event.h"
 
 namespace cat::core {
 	/*
@@ -160,5 +161,17 @@ namespace cat::core {
 
 		enet_peer_disconnect_now(conn, 0);
 		conn = nullptr;
+	}
+
+	/*
+		Polls for incoming network events such as connections,
+		disconnections, and data packets.
+		
+		This function blocks for a specified duration while waiting
+		for events, then returns control to the caller.
+		
+		@param _WaitDuration The maximum duration to wait for events.
+	 */
+	void Core_enet_poll(std::chrono::milliseconds _WaitDuration) {
 	}
 }

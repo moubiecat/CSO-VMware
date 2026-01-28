@@ -26,6 +26,7 @@
 #ifndef _CORE_H_
 #define _CORE_H_
 
+#include <chrono>
 #include <cstdint>
 #include <string_view>
 
@@ -81,6 +82,17 @@ namespace cat::core {
 	 * Disconnects the client from its connected server.
 	 */
 	void Core_enet_client_disconnect();
+
+	/*
+	 * Polls for incoming network events such as connections,
+	 * disconnections, and data packets.
+	 *
+	 * This function blocks for a specified duration while waiting
+	 * for events, then returns control to the caller.
+	 *
+	 * @param _WaitDuration The maximum duration to wait for events.
+	 */
+	void Core_enet_poll(std::chrono::milliseconds _WaitDuration = std::chrono::milliseconds(1000));
 }
 
 #endif // ^^^ !_CORE_H_
