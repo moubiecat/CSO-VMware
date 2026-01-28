@@ -11,10 +11,10 @@ endif ( )
 
 #
 # 定義版本號
-set ( ARCHON_VERSION_MAJOR 0 )
-set ( ARCHON_VERSION_MINOR 0 )
-set ( ARCHON_VERSION_PATCH 1 )
-set ( ARCHON_VERSION ${ARCHON_VERSION_MAJOR}.${ARCHON_VERSION_MINOR}.${ARCHON_VERSION_PATCH} )
+set ( CSOVMWARE_VERSION_MAJOR 0 )
+set ( CSOVMWARE_VERSION_MINOR 0 )
+set ( CSOVMWARE_VERSION_PATCH 1 )
+set ( CSOVMWARE_VERSION ${CSOVMWARE_VERSION_MAJOR}.${CSOVMWARE_VERSION_MINOR}.${CSOVMWARE_VERSION_PATCH} )
 
 #
 # 指定項目 C++23 作為編譯標準
@@ -29,8 +29,8 @@ set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" )
 
 #
 # 專案相關資訊設定
-project ( ARCHON 
-  VERSION ${ARCHON_VERSION} 
+project ( CSOVMware 
+  VERSION ${CSOVMWARE_VERSION} 
   DESCRIPTION "CSO-VMware: A CSNZ Virtual Machine Runtime Environment" 
   HOMEPAGE_URL "https://github.com/moubiecat/CSO-VMware" 
   LANGUAGES CXX 
@@ -65,6 +65,6 @@ add_executable ( EXE_SERVER
 )
 target_link_libraries ( EXE_SERVER PRIVATE enet )
 set_target_properties ( EXE_SERVER PROPERTIES 
-  OUTPUT_NAME "csovmware_server" 
+  OUTPUT_NAME "csovmware-srv" 
   LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:CONSOLE" 
 )
