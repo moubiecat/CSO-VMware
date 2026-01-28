@@ -42,13 +42,21 @@ include_directories ( "${PROJECT_SOURCE_DIR}/include" )
 
 #
 # 客戶端編譯
-add_library ( DLL_CLIENT SHARED )
+add_library ( DLL_CLIENT SHARED 
+  "${PROJECT_SOURCE_DIR}/src/net.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/core.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/client.cpp" 
+)
 target_compile_definitions ( DLL_CLIENT PRIVATE CLIENT_DLL )
 set_target_properties ( DLL_CLIENT PROPERTIES OUTPUT_NAME "csovmware" )
 
 #
 # 伺服器編譯
-add_executable ( EXE_SERVER )
+add_executable ( EXE_SERVER 
+  "${PROJECT_SOURCE_DIR}/src/net.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/core.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/server.cpp" 
+)
 set_target_properties ( EXE_SERVER PROPERTIES 
   OUTPUT_NAME "csovmware_server" 
   LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:CONSOLE" 
