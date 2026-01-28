@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include <enet/enet.h>
+#include "net.h"
 #include "core.h"
-#include "event.h"
 
 namespace cat::core {
 	/*
@@ -173,5 +173,24 @@ namespace cat::core {
 		@param _WaitDuration The maximum duration to wait for events.
 	 */
 	void Core_enet_poll(std::chrono::milliseconds _WaitDuration) {
+		/*ENetEvent enet;
+		while (enet_host_service(host, &enet, static_cast<enet_uint32>(_WaitDuration.count())) > 0) {
+			enet_data instance{ 0 };
+			instance.type = static_cast<std::uint32_t>(enet.type);
+			instance.channel = enet.channelID;
+
+			instance.flags = (enet.packet != nullptr) ? enet.packet->flags : 0;
+
+			if (enet.packet != nullptr && enet.packet->dataLength > 0) {
+				instance.data.resize(enet.packet->dataLength);
+				std::memcpy(instance.data.data(), enet.packet->data, enet.packet->dataLength);
+			}
+
+			instance.peer = static_cast<void*>(enet.peer);
+
+			enet_packet_destroy(enet.packet);
+
+			net::events.push(instance);
+		}*/
 	}
 }

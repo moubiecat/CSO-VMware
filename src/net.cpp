@@ -11,6 +11,14 @@ namespace cat {
 	 */
 	static bool connecting = false;
 
+	/*
+		Queue to store incoming ENet events.
+
+		This queue holds events such as connections, disconnections,
+		and data packets for processing by the application.
+	 */
+	std::queue<enet_data> net::events;
+
 
 	/*
 		Returns whether a client connection attempt is currently active.
@@ -57,6 +65,12 @@ namespace cat {
 	 */
 	void 
 	server::poll() const {
+		core::Core_enet_poll();
+
+		/*while (!net::events.empty()) {
+			enet_data event = net::events.front();
+			net::events.pop();
+		}*/
 	}
 
 	/*
@@ -94,5 +108,11 @@ namespace cat {
 	 */
 	void
 	client::poll() const {
+		core::Core_enet_poll();
+
+		/*while (!net::events.empty()) {
+			enet_data event = net::events.front();
+			net::events.pop();
+		}*/
 	}
 }
