@@ -1,3 +1,6 @@
 [submodule "external/enet"]
 	path = external/enet
 	url = https://github.com/lsalzman/enet.git
+[submodule "external/magic_args"]
+	path = external/magic_args
+	url = https://github.com/fredemmott/magic_args.git
