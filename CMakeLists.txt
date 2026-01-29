@@ -44,6 +44,7 @@ add_subdirectory ( external )
 # 包含頭文件
 include_directories ( "${PROJECT_SOURCE_DIR}/include" )
 include_directories ( "${PROJECT_SOURCE_DIR}/external/enet/include" )
+include_directories ( "${PROJECT_SOURCE_DIR}/external/magic_args" )
 
 #
 # 客戶端編譯
