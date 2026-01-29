@@ -133,8 +133,9 @@ namespace cat::core {
 			throw std::runtime_error("No available peers for initiating an ENet connection.");
 		}
 
-		int res = enet_host_service(host, nullptr, 5000);
-		if (res <= 0 || conn->state != ENET_PEER_STATE_CONNECTED) {
+		ENetEvent event;
+		int res = enet_host_service(host, &event, 5000);
+		if (res <= 0 || event.type != ENET_EVENT_TYPE_CONNECT) {
 			enet_peer_reset(conn);
 			conn = nullptr;
 			throw std::runtime_error("Connection to ENet server failed or timed out.");
