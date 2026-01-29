@@ -34,15 +34,6 @@
 
 namespace cat {
 	/*
-	 * Enumeration representing the result of packet processing.
-	 */
-	enum class result {
-		success = 0,
-		failure = 1,
-		error	= 2,
-	};
-
-	/*
 	 * Base interface for serializable packets.
 	 * All derived packets must implement serialization and deserialization.
 	 */
@@ -70,13 +61,6 @@ namespace cat {
 		 * @return true if successful, false otherwise.
 		 */
 		virtual bool deserialize(istream& _Stream) = 0;
-
-		/*
-		 * Processes the packet's data.
-		 *
-		 * @return An integer status code indicating the result of processing.
-		 */
-		virtual result process() = 0;
 	};
 
 	/*
