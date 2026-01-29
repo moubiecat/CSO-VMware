@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <windows.h>
 #include <print>
 #include <magic_args/magic_args.hpp>
 #include "cli.h"
