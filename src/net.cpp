@@ -103,7 +103,6 @@ namespace cat {
 	client::poll() const {
 		core::Core_enet_poll();
 
-		// test data
 		//std::vector<std::byte> data = {
 		//	std::byte{0x05}, std::byte{0x00}, std::byte{0x00}, std::byte{0x00},
 		//	std::byte{'H'},  std::byte{'e'},  std::byte{'l'},  std::byte{'l'},
@@ -117,6 +116,13 @@ namespace cat {
 
 		//if (packet && packet->deserialize(stream)) {
 		//	// successfully created and deserialized packet
+		//	result res = packet->process();
+
+		//	if (res == result::success) {
+		//		// packet processed successfully
+		//	} else {
+		//		// packet processing failed
+		//	}
 		//}
 	}
 }
