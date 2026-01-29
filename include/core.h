@@ -72,13 +72,6 @@ namespace cat::core {
 	void Core_enet_client_connect(std::string_view _Server, std::uint32_t _Port, std::uint32_t _Chunm);
 
 	/*
-	 * Disconnects a client from the server.
-	 *
-	 * @param _Peer Pointer to the peer to disconnect.
-	 */
-	void Core_enet_server_disconnect(void* _Peer);
-
-	/*
 	 * Disconnects the client from its connected server.
 	 */
 	void Core_enet_client_disconnect();

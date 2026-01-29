@@ -143,21 +143,6 @@ namespace cat::core {
 	}
 
 	/*
-		Disconnects a client from the server.
-
-		@param _Peer Pointer to the peer to disconnect.
-	 */
-	void
-	Core_enet_server_disconnect(void* _Peer) {
-		if (_Peer == nullptr) {
-			return;
-		}
-
-		ENetPeer* peer = static_cast<ENetPeer*>(_Peer);
-		enet_peer_disconnect_now(peer, 0);
-	}
-
-	/*
 		Disconnects the client from its connected server.
 	 */
 	void
