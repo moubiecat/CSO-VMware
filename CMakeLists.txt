@@ -61,7 +61,7 @@ set_target_properties ( DLL_CLIENT PROPERTIES OUTPUT_NAME "csovmware" )
 add_executable ( EXE_CLIENT 
   "${PROJECT_SOURCE_DIR}/src/net.cpp" 
   "${PROJECT_SOURCE_DIR}/src/core.cpp" 
-  "${PROJECT_SOURCE_DIR}/src/client.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/client_cli.cpp" 
 )
 target_link_libraries ( EXE_CLIENT PRIVATE enet )
 set_target_properties ( EXE_CLIENT PROPERTIES 
