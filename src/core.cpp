@@ -1,6 +1,5 @@
 #include <stdexcept>
 #include <enet/enet.h>
-#include "net.h"
 #include "core.h"
 
 namespace cat::core {

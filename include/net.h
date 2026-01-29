@@ -35,20 +35,12 @@
 
 namespace cat {
     /*
-     * Reports whether the ENet subsystem has been successfully initialized.
-     *
-     * @return true  If the ENet system is initialized and ready.
-     * @return false If ENet has not been set up or has already been shut down.
-     */
-    [[nodiscard]] bool is_setup() noexcept;
-
-    /*
      * Returns whether a client connection attempt is currently active.
      *
      * @return true  If a connection is active or being established.
      * @return false If no client connection exists.
      */
-    [[nodiscard]] bool is_connecting() noexcept;
+    [[nodiscard]] bool is_connect() noexcept;
 
     /*
      * Represents a network event in the ENet library.

@@ -27,7 +27,7 @@ namespace cat {
 		@return false If no client connection exists.
 	 */
 	bool
-	is_connecting() noexcept {
+	is_connect() noexcept {
 		return connecting;
 	}
 

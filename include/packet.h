@@ -26,6 +26,9 @@
 #ifndef _PACKET_H_
 #define _PACKET_H_
 
+#include <cstdint>
+#include <memory>
+#include <unordered_map>
 #include "stream.h"
 
 namespace cat {
@@ -57,6 +60,60 @@ namespace cat {
 		 * @return true if successful, false otherwise.
 		 */
 		virtual bool deserialize(istream& _Stream) = 0;
+	};
+
+	/*
+	 * Packet type registry for dynamic packet creation.
+	 *
+	 * Allows registration of packet types with unique IDs and
+	 * creation of packet instances based on those IDs.
+	 */
+	class pkt_registry {
+	public:
+		/*
+		 * Registers a packet type with a unique ID.
+		 *
+		 * @tparam _Ty Packet type derived from `packet`.
+		 * @param  _Id Unique identifier for the packet type.
+		 * @return true if registration is successful, false if ID already exists.
+		 */
+		template<class _Pkt>
+		static bool register_type(std::uint8_t _Id) {
+			static_assert(std::is_base_of_v<packet, _Pkt>, "registered type must derive from packet");
+
+			auto& map = types();
+			if (map.find(_Id) != map.end()) {
+				return false;
+			}
+
+			map[_Id] = []() -> std::unique_ptr<packet> {
+				return std::make_unique<_Pkt>(); };
+			return true;
+		}
+
+		/*
+		 * Creates a packet instance based on the given ID.
+		 *
+		 * @param _Id Unique identifier for the packet type.
+		 * @return A unique pointer to the created packet instance, or nullptr if ID not found.
+		 */
+		static std::unique_ptr<packet> create(std::uint8_t _Id) {
+			auto it = types().find(_Id);
+			return (it != types().end()) ? it->second() : nullptr;
+		}
+	private:
+		//< Type alias for packet creator function pointer.
+		using creator_fn = std::unique_ptr<packet>(*)();
+
+		/*
+		 * Returns the static map of registered packet types.
+		 *
+		 * @return Reference to the map of packet type creators.
+		 */
+		static std::unordered_map<std::uint8_t, creator_fn>& types() {
+			static std::unordered_map<std::uint8_t, creator_fn> instance;
+			return instance;
+		}
 	};
 }
 
