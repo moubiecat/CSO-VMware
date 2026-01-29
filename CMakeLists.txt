@@ -57,6 +57,19 @@ target_link_libraries ( DLL_CLIENT PRIVATE enet )
 set_target_properties ( DLL_CLIENT PROPERTIES OUTPUT_NAME "csovmware" )
 
 #
+# 客戶端編譯
+add_executable ( EXE_CLIENT 
+  "${PROJECT_SOURCE_DIR}/src/net.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/core.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/client.cpp" 
+)
+target_link_libraries ( EXE_CLIENT PRIVATE enet )
+set_target_properties ( EXE_CLIENT PROPERTIES 
+  OUTPUT_NAME "csovmware-cli" 
+  LINK_FLAGS "/MANIFESTUAC:\"level='asInvoker' uiAccess='false'\" /SUBSYSTEM:CONSOLE" 
+)
+
+#
 # 伺服器編譯
 add_executable ( EXE_SERVER 
   "${PROJECT_SOURCE_DIR}/src/net.cpp" 

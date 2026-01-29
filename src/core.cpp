@@ -180,24 +180,29 @@ namespace cat::core {
 		@param _WaitDuration The maximum duration to wait for events.
 	 */
 	void Core_enet_poll(std::chrono::milliseconds _WaitDuration) {
-		/*ENetEvent enet;
-		while (enet_host_service(host, &enet, static_cast<enet_uint32>(_WaitDuration.count())) > 0) {
-			enet_data instance{ 0 };
-			instance.type = static_cast<std::uint32_t>(enet.type);
-			instance.channel = enet.channelID;
+		enet_uint32 ms = static_cast<enet_uint32>(_WaitDuration.count());
 
-			instance.flags = (enet.packet != nullptr) ? enet.packet->flags : 0;
-
-			if (enet.packet != nullptr && enet.packet->dataLength > 0) {
-				instance.data.resize(enet.packet->dataLength);
-				std::memcpy(instance.data.data(), enet.packet->data, enet.packet->dataLength);
-			}
-
-			instance.peer = static_cast<void*>(enet.peer);
-
-			enet_packet_destroy(enet.packet);
-
-			net::events.push(instance);
-		}*/
+		//ENetEvent enet;
+		//while (enet_host_service(host, &enet, ms) > 0) {
+		//	switch (enet.type) {
+		//	case ENET_EVENT_TYPE_CONNECT:
+		//		std::println("A new client connected from {}:{}.",
+		//			enet.peer->address.host,
+		//			enet.peer->address.port);
+		//		// print data
+		//		std::println("Peer data: {}", enet.data);
+		//		break;
+		//	case ENET_EVENT_TYPE_DISCONNECT:
+		//		std::println("- A client disconnected.");
+		//		enet.peer->data = nullptr;
+		//		break;
+		//	case ENET_EVENT_TYPE_RECEIVE:
+		//		/*std::println("- A packet of length {} was received from a client on channel {}.", 
+		//			enet.packet->dataLength, 
+		//			enet.channelID);*/
+		//		enet_packet_destroy(enet.packet);
+		//		break;
+		//	}
+		//}
 	}
 }
