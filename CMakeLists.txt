@@ -52,7 +52,6 @@ add_library ( DLL_CLIENT SHARED
   "${PROJECT_SOURCE_DIR}/src/core.cpp" 
   "${PROJECT_SOURCE_DIR}/src/client.cpp" 
 )
-target_compile_definitions ( DLL_CLIENT PRIVATE CLIENT_DLL )
 target_link_libraries ( DLL_CLIENT PRIVATE enet )
 set_target_properties ( DLL_CLIENT PROPERTIES OUTPUT_NAME "csovmware" )
 
