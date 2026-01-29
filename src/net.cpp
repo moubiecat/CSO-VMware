@@ -103,9 +103,20 @@ namespace cat {
 	client::poll() const {
 		core::Core_enet_poll();
 
-		/*while (!net::events.empty()) {
-			enet_data event = net::events.front();
-			net::events.pop();
-		}*/
+		// test data
+		//std::vector<std::byte> data = {
+		//	std::byte{0x05}, std::byte{0x00}, std::byte{0x00}, std::byte{0x00},
+		//	std::byte{'H'},  std::byte{'e'},  std::byte{'l'},  std::byte{'l'},
+		//	std::byte{'o'} };
+
+		//cat::istream stream(data);
+
+		//std::uint8_t pid;
+		//stream.read(pid);
+		//auto packet = cat::packet_registry::create(pid);
+
+		//if (packet && packet->deserialize(stream)) {
+		//	// successfully created and deserialized packet
+		//}
 	}
 }

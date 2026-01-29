@@ -81,7 +81,7 @@ namespace cat {
 	 * Allows registration of packet types with unique IDs and
 	 * creation of packet instances based on those IDs.
 	 */
-	class pkt_registry {
+	class packet_registry {
 	public:
 		/*
 		 * Registers a packet type with a unique identifier.
