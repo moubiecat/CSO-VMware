@@ -30,7 +30,6 @@
 #include <format>
 #include <string>
 #include <string_view>
-#include <queue>
 #include <vector>
 
 namespace cat {
@@ -41,6 +40,9 @@ namespace cat {
      * @return false If no client connection exists.
      */
     [[nodiscard]] bool is_connect() noexcept;
+
+    //< Function pointer type for handling peer-related events
+    using peer_handler = void*;
 
     /*
      * Represents a network event in the ENet library.
@@ -54,7 +56,7 @@ namespace cat {
         std::uint8_t    channel;		/**< channel on the peer that generated the event, if appropriate */
         std::uint32_t   flags;			/**< bitwise-or of ENetPacketFlag constants */
         std::vector<std::uint8_t> data;	/**< data for packet */
-        void* peer;						/**< peer that generated a connect, disconnect or receive event */
+        peer_handler peer;				/**< peer that generated a connect, disconnect or receive event */
     };
 
     /*
@@ -116,9 +118,6 @@ namespace cat {
 
         //< Port number for accepting incoming connections
         const std::uint32_t port;
-
-        //< Queue to store incoming ENet events
-        static std::queue<enet_data> events;
     };
 }
 

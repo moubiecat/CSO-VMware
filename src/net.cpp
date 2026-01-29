@@ -11,14 +11,6 @@ namespace cat {
 	 */
 	static bool connecting = false;
 
-	/*
-		Queue to store incoming ENet events.
-
-		This queue holds events such as connections, disconnections,
-		and data packets for processing by the application.
-	 */
-	std::queue<enet_data> net::events;
-
 
 	/*
 		Returns whether a client connection attempt is currently active.
