@@ -30,7 +30,6 @@
 #include <format>
 #include <string>
 #include <string_view>
-#include <vector>
 
 namespace cat {
     /*
@@ -40,24 +39,6 @@ namespace cat {
      * @return false If no client connection exists.
      */
     [[nodiscard]] bool is_connect() noexcept;
-
-    //< Function pointer type for handling peer-related events
-    using peer_handler = void*;
-
-    /*
-     * Represents a network event in the ENet library.
-     * Contains information about the type of event,
-     * the channel on which it occurred, any associated flags,
-     * the data payload for packet events, and the peer
-     * that generated the event for connection-related events.
-     */
-    struct enet_data {
-        std::uint32_t   type;			/**< type of the event */
-        std::uint8_t    channel;		/**< channel on the peer that generated the event, if appropriate */
-        std::uint32_t   flags;			/**< bitwise-or of ENetPacketFlag constants */
-        std::vector<std::uint8_t> data;	/**< data for packet */
-        peer_handler peer;				/**< peer that generated a connect, disconnect or receive event */
-    };
 
     /*
      * Abstract base class representing a network endpoint (client or server).
