@@ -26,6 +26,7 @@
 #ifndef _PACKET_H_
 #define _PACKET_H_
 
+#include <concepts>
 #include <cstdint>
 #include <memory>
 #include <unordered_map>
@@ -63,6 +64,18 @@ namespace cat {
 	};
 
 	/*
+	 * Concept to ensure a type is a packet and default constructible.
+	 * 1. The type must be derived from the 'packet' base class.
+	 * 2. The type must be default constructible (i.e., it can be constructed without arguments).
+	 *
+	 * @tparam _Pkt Type to check.
+	 */
+	template<class _Pkt>
+	concept packet_binder =
+		std::derived_from<_Pkt, packet>&&
+		std::is_default_constructible_v<_Pkt>;
+
+	/*
 	 * Packet type registry for dynamic packet creation.
 	 *
 	 * Allows registration of packet types with unique IDs and
@@ -71,21 +84,19 @@ namespace cat {
 	class pkt_registry {
 	public:
 		/*
-		 * Registers a packet type with a unique ID.
+		 * Registers a packet type with a unique identifier.
 		 *
-		 * @tparam _Ty Packet type derived from `packet`.
-		 * @param  _Id Unique identifier for the packet type.
-		 * @return true if registration is successful, false if ID already exists.
+		 * @tparam _Pkt Packet type to register (must satisfy packet_binder concept).
+		 * @param _Id   Unique identifier for the packet type.
+		 * @return true  If registration was successful
+		 * @return false If the ID is already registered
 		 */
-		template<class _Pkt>
+		template<packet_binder _Pkt>
 		static bool register_type(std::uint8_t _Id) {
-			static_assert(std::is_base_of_v<packet, _Pkt>, "registered type must derive from packet");
-
 			auto& map = types();
 			if (map.find(_Id) != map.end()) {
 				return false;
 			}
-
 			map[_Id] = []() -> std::unique_ptr<packet> {
 				return std::make_unique<_Pkt>(); };
 			return true;
