@@ -29,4 +29,4 @@
 typedef void*			peer_t;
 typedef const void*		pdata_t;
 
-#endif // ^^^ !_STREAM_H_
+#endif // ^^^ !_TYPING_H_
