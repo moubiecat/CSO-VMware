@@ -163,28 +163,19 @@ namespace cat::core {
 		for events, then returns control to the caller.
 	 */
 	void Core_enet_poll() {
-		//ENetEvent enet;
-		//while (enet_host_service(host, &enet, 1000) > 0) {
-		//	switch (enet.type) {
-		//	case ENET_EVENT_TYPE_CONNECT:
-		//		std::println("A new client connected from {}:{}.",
-		//			enet.peer->address.host,
-		//			enet.peer->address.port);
-		//		// print data
-		//		std::println("Peer data: {}", enet.data);
-		//		break;
-		//	case ENET_EVENT_TYPE_DISCONNECT:
-		//		std::println("- A client disconnected.");
-		//		enet.peer->data = nullptr;
-		//		break;
-		//	case ENET_EVENT_TYPE_RECEIVE:
-		//		/*std::println("- A packet of length {} was received from a client on channel {}.", 
-		//			enet.packet->dataLength, 
-		//			enet.channelID);*/
-		//		enet_packet_destroy(enet.packet);
-		//		break;
-		//	}
-		//}
+		ENetEvent event;
+		while (enet_host_service(host, &event, 1000) > 0) {
+			/*switch (event.type) {
+			case ENET_EVENT_TYPE_CONNECT:
+				break;
+			case ENET_EVENT_TYPE_DISCONNECT:
+				event.peer->data = nullptr;
+				break;
+			case ENET_EVENT_TYPE_RECEIVE:
+				enet_packet_destroy(event.packet);
+				break;
+			}*/
+		}
 	}
 
 	/*
@@ -194,17 +185,13 @@ namespace cat::core {
 		for both server and client hosts.
 	 */
 	void Core_enet_send() {
-		/*
-		enet_uint32 flags = _Reliable ? ENET_PACKET_FLAG_RELIABLE : 0;
-		ENetPacket* packet = enet_packet_create(_Data, _Size, flags);
-		if (packet == nullptr) {
-			throw std::runtime_error("Failed to create ENet packet for sending.");
-		}
-		int res = enet_peer_send(conn, _Channel, packet);
-		if (res != 0) {
-			enet_packet_destroy(packet);
-			throw std::runtime_error("Failed to send ENet packet.");
-		}
-		enet_host_flush(host);*/
+		/*auto res = pool_manager::instance().flush_packets();
+		for (auto& r : res) {
+			ENetPacket* packet = enet_packet_create(r.data.data(), r.data.size(), r.flags);
+			int send_res = enet_peer_send(r.peer, r.channel, packet);
+			if (send_res < 0) {
+				enet_packet_destroy(packet);
+			}
+		}*/
 	}
 }
