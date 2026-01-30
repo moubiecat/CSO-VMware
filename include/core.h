@@ -28,7 +28,6 @@
 
 #include <cstdint>
 #include <string_view>
-#include "typing.h"
 
 namespace cat::core {
 	/*

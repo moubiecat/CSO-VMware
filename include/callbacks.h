@@ -23,48 +23,35 @@
 ***/
 
 #pragma once
-#ifndef _USERS_H_
-#define _USERS_H_
+#ifndef _CALLBACKS_H_
+#define _CALLBACKS_H_
 
-#include <list>
-#include <optional>
+#include <cstddef>
 #include "typings.h"
 
-namespace cat {
+namespace cat::core {
 	/*
-	 * @brief Initialize the user management system.
+	 * Callback invoked when a new peer connects to the server.
+	 *
+	 * @param _Peer  A handle representing the connected peer.
 	 */
-	void setup_user_system() noexcept;
+	extern void OnConnect(peer_t _Peer);
 
 	/*
-	 * @brief Acquire a new user ID.
+	 * Callback invoked when a peer disconnects from the server.
 	 *
-	 * @param _Peer The peer to associate with the new user ID.
-	 * @return A newly acquired user ID, or std::nullopt if none are available.
+	 * @param _Peer  A handle representing the disconnected peer.
 	 */
-	[[nodiscard]] std::optional<userid_t> acquire_user(const peer_t _Peer) noexcept;
+	extern void OnDisconnect(peer_t _Peer);
 
 	/*
-	 * @brief Get the peer associated with a given user ID.
+	 * Callback invoked when a message is received from a peer.
 	 *
-	 * @param _User The user ID whose peer is to be retrieved.
-	 * @return The peer associated with the given user ID, or std::nullopt if the user ID is invalid or not in use.
+	 * @param _Peer  A handle representing the peer that sent the message.
+	 * @param _Data  A pointer to the received data.
+	 * @param _Size  The size of the received data in bytes.
 	 */
-	[[nodiscard]] std::optional<peer_t> get_user_peer(userid_t _User) noexcept;
-
-	/*
-	 * @brief Get a list of all currently active user IDs.
-	 *
-	 * @return A list of active user IDs.
-	 */
-	[[nodiscard]] std::list<userid_t> get_active_users() noexcept;
-
-	/*
-	 * @brief Release a previously acquired user ID.
-	 *
-	 * @param _User The user ID to release.
-	 */
-	void release_user(userid_t _User) noexcept;
+	extern void OnMessage(peer_t _Peer, pdata_t _Data, std::size_t _Size);
 }
 
-#endif // ^^^ !_USERS_H_
+#endif // ^^^ !_CALLBACKS_H_

@@ -27,8 +27,8 @@
 #define _CLIENT_H_
 
 #include "net.h"
-#include "typing.h"
 #include "packet.h"
+#include "typings.h"
 
 namespace cat {
 	/*
