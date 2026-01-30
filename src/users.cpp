@@ -1,4 +1,5 @@
 #include <array>
+#include <cassert>
 #include <queue>
 #include "users.h"
 
@@ -14,6 +15,11 @@ namespace cat {
 		peer_t peer = nullptr;
 	};
 	
+	/*
+		Global flag to ensure the user system is initialized only once.
+	 */
+	static bool initialized = false;
+
 	/* 	
 		Queue to manage available user IDs.
 		IDs are reused when users are released.
@@ -40,6 +46,8 @@ namespace cat {
 			ids.push(i);
 			users[i] = {};
 		}
+
+		initialized = true;
 	}
 
 	/*
@@ -50,6 +58,8 @@ namespace cat {
 	 */
 	std::optional<userid_t> 
 	acquire_user(const peer_t _Peer) noexcept {
+		assert(initialized && "User system not initialized.");
+
 		if (ids.empty()) {
 			return std::nullopt;
 		}
@@ -71,8 +81,11 @@ namespace cat {
 	 */
 	std::optional<peer_t> 
 	get_user_peer(userid_t _User) noexcept {
-		if (_User >= users.size())
+		assert(initialized && "User system not initialized.");
+
+		if (_User >= users.size()) {
 			return std::nullopt;
+		}
 
 		const auto& slot = users[_User];
 		if (!slot.in_use) {
@@ -89,6 +102,8 @@ namespace cat {
 	 */
 	std::list<userid_t> 
 	get_active_users() noexcept {
+		assert(initialized && "User system not initialized.");
+
 		std::list<userid_t> res;
 		for (userid_t i = 0; i < users.size(); ++i) {
 			if (users[i].in_use) {
@@ -105,6 +120,8 @@ namespace cat {
 	 */
 	void 
 	release_user(userid_t _User) noexcept {
+		assert(initialized && "User system not initialized.");
+
 		if (_User >= users.size()) {
 			return;
 		}
