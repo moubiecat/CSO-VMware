@@ -49,10 +49,9 @@ namespace cat::core {
 	 *
 	 * @param _Host The hostname or IP address to bind the server to.
 	 * @param _Port The port number on which the server will listen for incoming connections.
-	 * @param _Chunm The maximum number of channels to be used for communication.
 	 * @param _Cltnum The maximum number of clients that can connect to the server.
 	 */
-	void Core_enet_server_create(std::string_view _Host, std::uint32_t _Port, std::uint32_t _Chunm, std::uint32_t _Cltnum);
+	void Core_enet_server_create(std::string_view _Host, std::uint32_t _Port, std::uint32_t _Cltnum);
 
 	/*
 	 * Creates an ENet client host.
@@ -66,9 +65,8 @@ namespace cat::core {
 	 *
 	 * @param _Server The hostname or IP address of the remote server.
 	 * @param _Port The port number of the remote server.
-	 * @param _Chunm The number of channels to be used for communication.
 	 */
-	void Core_enet_client_connect(std::string_view _Server, std::uint32_t _Port, std::uint32_t _Chunm);
+	void Core_enet_client_connect(std::string_view _Server, std::uint32_t _Port);
 
 	/*
 	 * Disconnects the client from its connected server.

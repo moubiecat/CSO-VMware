@@ -32,7 +32,7 @@ namespace cat {
 	void
 	server::connect() const {
 		core::Core_enet_initialize();
-		core::Core_enet_server_create(host, port, 1, 32);
+		core::Core_enet_server_create(host, port, 32);
 		connecting = true;
 	}
 
@@ -96,7 +96,7 @@ namespace cat {
 	client::connect() const {
 		core::Core_enet_initialize();
 		core::Core_enet_client_create(1);
-		core::Core_enet_client_connect(host, port, 0);
+		core::Core_enet_client_connect(host, port);
 		connecting = true;
 	}
 

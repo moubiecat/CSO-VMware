@@ -68,11 +68,10 @@ namespace cat::core {
 		
 		@param _Host The hostname or IP address to bind the server to.
 		@param _Port The port number on which the server will listen for incoming connections.
-		@param _Chunm The maximum number of channels to be used for communication.
 		@param _Cltnum The maximum number of clients that can connect to the server.
 	 */
 	void 
-	Core_enet_server_create(std::string_view _Host, std::uint32_t _Port, std::uint32_t _Chunm, std::uint32_t _Cltnum) {
+	Core_enet_server_create(std::string_view _Host, std::uint32_t _Port, std::uint32_t _Cltnum) {
 		if (!initialized) {
 			throw std::runtime_error("ENet library is not initialized. Call Core_enet_initialize() first.");
 		}
@@ -85,7 +84,7 @@ namespace cat::core {
 		enet_address_set_host(&addr, _Host.data());
 		addr.port = _Port;
 
-		host = enet_host_create(&addr, _Cltnum, _Chunm, 0, 0);
+		host = enet_host_create(&addr, _Cltnum, 1, 0, 0);
 		if (host == nullptr) {
 			throw std::runtime_error("An error occurred while trying to create an ENet server host.");
 		}
@@ -117,10 +116,9 @@ namespace cat::core {
 		
 		@param _Server The hostname or IP address of the remote server.
 		@param _Port The port number of the remote server.
-		@param _Chunm The number of channels to be used for communication.
 	 */
 	void 
-	Core_enet_client_connect(std::string_view _Server, std::uint32_t _Port, std::uint32_t _Chunm) {
+	Core_enet_client_connect(std::string_view _Server, std::uint32_t _Port) {
 		if (host == nullptr) {
 			throw std::runtime_error("ENet client host is not created. Call Core_enet_client_create() first.");
 		}
@@ -129,7 +127,7 @@ namespace cat::core {
 		enet_address_set_host(&addr, _Server.data());
 		addr.port = _Port;
 
-		conn = enet_host_connect(host, &addr, _Chunm, 0);
+		conn = enet_host_connect(host, &addr, 1, 0);
 		if (conn == nullptr) {
 			throw std::runtime_error("No available peers for initiating an ENet connection.");
 		}
@@ -170,10 +168,12 @@ namespace cat::core {
 			case ENET_EVENT_TYPE_CONNECT:
 				OnConnect(event.peer);
 				break;
+
 			case ENET_EVENT_TYPE_DISCONNECT:
 				OnDisconnect(event.peer);
 				event.peer->data = nullptr;
 				break;
+
 			case ENET_EVENT_TYPE_RECEIVE:
 				OnMessage(event.peer, event.packet->data, event.packet->dataLength);
 				enet_packet_destroy(event.packet);
