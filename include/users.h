@@ -26,6 +26,7 @@
 #ifndef _USERS_H_
 #define _USERS_H_
 
+#include <list>
 #include <optional>
 #include "typing.h"
 
@@ -50,6 +51,13 @@ namespace cat {
 	 * @return The peer associated with the given user ID, or std::nullopt if the user ID is invalid or not in use.
 	 */
 	[[nodiscard]] std::optional<peer_t> get_user_peer(userid_t _User) noexcept;
+
+	/*
+	 * @brief Get a list of all currently active user IDs.
+	 *
+	 * @return A list of active user IDs.
+	 */
+	[[nodiscard]] std::list<userid_t> get_active_users() noexcept;
 
 	/*
 	 * @brief Release a previously acquired user ID.

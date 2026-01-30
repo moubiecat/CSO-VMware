@@ -83,6 +83,22 @@ namespace cat {
 	}
 
 	/*
+		@brief Get a list of all currently active user IDs.
+		
+		@return A list of active user IDs.
+	 */
+	std::list<userid_t> 
+	get_active_users() noexcept {
+		std::list<userid_t> res;
+		for (userid_t i = 0; i < users.size(); ++i) {
+			if (users[i].in_use) {
+				res.push_back(i);
+			}
+		}
+		return res;
+	}
+
+	/*
 		@brief Release a previously acquired user ID.
 		
 		@param _User The user ID to release.
