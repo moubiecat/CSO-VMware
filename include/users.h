@@ -26,8 +26,8 @@
 #ifndef _USERS_H_
 #define _USERS_H_
 
-#include <list>
 #include <optional>
+#include <vector>
 #include "typings.h"
 
 namespace cat {
@@ -57,14 +57,15 @@ namespace cat {
 	 *
 	 * @return A list of active user IDs.
 	 */
-	[[nodiscard]] std::list<userid_t> get_active_users() noexcept;
+	[[nodiscard]] std::vector<userid_t> get_users() noexcept;
 
 	/*
-	 * @brief Release a previously acquired user ID.
+	 * @brief Release a user ID, making it available for reuse.
 	 *
-	 * @param _User The user ID to release.
+	 * @param _Peer The peer whose associated user ID is to be released.
+	 * @return True if the user ID was successfully released, false otherwise.
 	 */
-	void release_user(userid_t _User) noexcept;
+	[[nodiscard]] std::optional<userid_t> release_user(const peer_t _Peer) noexcept;
 }
 
 #endif // ^^^ !_USERS_H_
