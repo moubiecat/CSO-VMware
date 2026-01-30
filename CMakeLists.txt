@@ -74,6 +74,7 @@ set_target_properties ( EXE_CLIENT PROPERTIES
 add_executable ( EXE_SERVER 
   "${PROJECT_SOURCE_DIR}/src/net.cpp" 
   "${PROJECT_SOURCE_DIR}/src/core.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/users.cpp" 
   "${PROJECT_SOURCE_DIR}/src/server.cpp" 
 )
 target_link_libraries ( EXE_SERVER PRIVATE enet )
