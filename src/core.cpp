@@ -199,7 +199,7 @@ namespace cat::core {
 		@param _Channel The channel number to send the packet on.
 		@param _Flags Flags controlling the packet's delivery behavior.
 	 */
-	void Core_enet_send(const void* _Data, std::size_t _Size, std::uint8_t _Channel, std::uint32_t _Flags) {
+	void Core_enet_send(pdata_t _Data, std::size_t _Size, std::uint8_t _Channel, std::uint32_t _Flags) {
 		/*
 		enet_uint32 flags = _Reliable ? ENET_PACKET_FLAG_RELIABLE : 0;
 		ENetPacket* packet = enet_packet_create(_Data, _Size, flags);

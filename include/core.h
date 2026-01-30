@@ -29,6 +29,7 @@
 #include <chrono>
 #include <cstdint>
 #include <string_view>
+#include "typing.h"
 
 namespace cat::core {
 	/*
@@ -95,7 +96,7 @@ namespace cat::core {
 	 * @param _Channel The channel number to send the packet on.
 	 * @param _Flags Flags controlling the packet's delivery behavior.
 	 */
-	void Core_enet_send(const void* _Data, std::size_t _Size, std::uint8_t _Channel, std::uint32_t _Flags);
+	void Core_enet_send(pdata_t _Data, std::size_t _Size, std::uint8_t _Channel, std::uint32_t _Flags);
 }
 
 #endif // ^^^ !_CORE_H_
