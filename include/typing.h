@@ -28,5 +28,6 @@
 
 typedef void*			peer_t;
 typedef const void*		pdata_t;
+typedef unsigned int 	userid_t;
 
 #endif // ^^^ !_TYPING_H_

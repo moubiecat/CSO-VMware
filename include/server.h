@@ -27,7 +27,6 @@
 #define _SERVER_H_
 
 #include "net.h"
-// dependencies
 #include "typing.h"
 #include "packet.h"
 
