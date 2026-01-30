@@ -27,6 +27,9 @@
 #define _SERVER_H_
 
 #include "net.h"
+// dependencies
+#include "typing.h"
+#include "packet.h"
 
 namespace cat {
 	/*
@@ -78,6 +81,21 @@ namespace cat {
 		 * for events, then returns control to the caller.
 		 */
 		void poll() const override;
+
+		/*
+		 * Broadcasts a packet to all connected peers.
+		 *
+		 * @param _Packet Pointer to the packet to be broadcasted.
+		 */
+		void broadcast(const packet* _Packet) const;
+
+		/*
+		 * Sends a packet to a specific peer.
+		 *
+		 * @param _Packet Pointer to the packet to be sent.
+		 * @param _Peer   The target peer to which the packet should be sent.
+		 */
+		void sendto(const packet* _Packet, peer_t _Peer) const;
 	};
 }
 

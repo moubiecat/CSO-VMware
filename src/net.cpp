@@ -57,12 +57,37 @@ namespace cat {
 	 */
 	void 
 	server::poll() const {
-		core::Core_enet_poll();
+		// core::Core_enet_poll();
 
 		/*while (!net::events.empty()) {
 			enet_data event = net::events.front();
 			net::events.pop();
 		}*/
+	}
+
+	/*
+		Broadcasts a packet to all connected peers.
+		
+		@param _Packet Pointer to the packet to be broadcasted.
+	 */
+	void 
+	server::broadcast(const packet* _Packet) const {
+		cat::ostream os;
+		_Packet->serialize(os);
+		//core::Core_enet_send(buffer.data(), buffer.size(), 0, 1);
+	}
+
+	/*
+		Sends a packet to a specific peer.
+		
+		@param _Packet Pointer to the packet to be sent.
+		@param _Peer   The target peer to which the packet should be sent.
+	 */
+	void 
+	server::sendto(const packet* _Packet, peer_t _Peer) const {
+		cat::ostream os;
+		_Packet->serialize(os);
+		//core::Core_enet_send(buffer.data(), buffer.size(), 0, 0);
 	}
 
 	/*
@@ -100,7 +125,7 @@ namespace cat {
 	 */
 	void
 	client::poll() const {
-		core::Core_enet_poll();
+		// core::Core_enet_poll();
 
 		//std::vector<std::byte> data = {
 		//	std::byte{0x05}, std::byte{0x00}, std::byte{0x00}, std::byte{0x00},
@@ -123,5 +148,17 @@ namespace cat {
 		//		// packet processing failed
 		//	}
 		//}
+	}
+
+	/*
+		Sends a packet to the connected server.
+		
+		@param _Packet Pointer to the packet to be sent.
+	 */
+	void 
+	client::send(const packet* _Packet) const {
+		cat::ostream os;
+		_Packet->serialize(os);
+		//core::Core_enet_send(buffer.data(), buffer.size(), 0, 0);
 	}
 }
