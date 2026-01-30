@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include <enet/enet.h>
 #include "core.h"
+#include "callbacks.h"
 
 namespace cat::core {
 	/*
@@ -165,16 +166,19 @@ namespace cat::core {
 	void Core_enet_poll() {
 		ENetEvent event;
 		while (enet_host_service(host, &event, 1000) > 0) {
-			/*switch (event.type) {
+			switch (event.type) {
 			case ENET_EVENT_TYPE_CONNECT:
+				OnConnect(event.peer);
 				break;
 			case ENET_EVENT_TYPE_DISCONNECT:
+				OnDisconnect(event.peer);
 				event.peer->data = nullptr;
 				break;
 			case ENET_EVENT_TYPE_RECEIVE:
+				OnMessage(event.peer, event.packet->data, event.packet->dataLength);
 				enet_packet_destroy(event.packet);
 				break;
-			}*/
+			}
 		}
 	}
 
