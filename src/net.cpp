@@ -58,13 +58,9 @@ namespace cat {
 		for events, then returns control to the caller.
 	 */
 	void 
-	server::poll() const {
-		// core::Core_enet_poll();
-
-		/*while (!net::events.empty()) {
-			enet_data event = net::events.front();
-			net::events.pop();
-		}*/
+	server::flush() const {
+		core::Core_enet_poll();
+		core::Core_enet_send();
 	}
 
 	/*
@@ -126,30 +122,9 @@ namespace cat {
 		accordingly, allowing the client to respond to server communications.
 	 */
 	void
-	client::poll() const {
-		// core::Core_enet_poll();
-
-		//std::vector<std::byte> data = {
-		//	std::byte{0x05}, std::byte{0x00}, std::byte{0x00}, std::byte{0x00},
-		//	std::byte{'H'},  std::byte{'e'},  std::byte{'l'},  std::byte{'l'},
-		//	std::byte{'o'} };
-
-		//cat::istream stream(data);
-
-		//std::uint8_t pid;
-		//stream.read(pid);
-		//auto packet = cat::packet_registry::create(pid);
-
-		//if (packet && packet->deserialize(stream)) {
-		//	// successfully created and deserialized packet
-		//	result res = packet->process();
-
-		//	if (res == result::success) {
-		//		// packet processed successfully
-		//	} else {
-		//		// packet processing failed
-		//	}
-		//}
+	client::flush() const {
+		core::Core_enet_poll();
+		core::Core_enet_send();
 	}
 
 	/*

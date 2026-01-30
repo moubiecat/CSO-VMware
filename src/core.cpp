@@ -161,14 +161,10 @@ namespace cat::core {
 		
 		This function blocks for a specified duration while waiting
 		for events, then returns control to the caller.
-		
-		@param _WaitDuration The maximum duration to wait for events.
 	 */
-	void Core_enet_poll(std::chrono::milliseconds _WaitDuration) {
-		enet_uint32 ms = static_cast<enet_uint32>(_WaitDuration.count());
-
+	void Core_enet_poll() {
 		//ENetEvent enet;
-		//while (enet_host_service(host, &enet, ms) > 0) {
+		//while (enet_host_service(host, &enet, 1000) > 0) {
 		//	switch (enet.type) {
 		//	case ENET_EVENT_TYPE_CONNECT:
 		//		std::println("A new client connected from {}:{}.",
@@ -192,14 +188,12 @@ namespace cat::core {
 	}
 
 	/*
-		Sends a data packet to the connected peer.
+		Sends queued outgoing packets to connected peers.
 		
-		@param _Data Pointer to the data to be sent.
-		@param _Size Size of the data in bytes.
-		@param _Channel The channel number to send the packet on.
-		@param _Flags Flags controlling the packet's delivery behavior.
+		This function ensures that all pending data is transmitted
+		for both server and client hosts.
 	 */
-	void Core_enet_send(pdata_t _Data, std::size_t _Size, std::uint8_t _Channel, std::uint32_t _Flags) {
+	void Core_enet_send() {
 		/*
 		enet_uint32 flags = _Reliable ? ENET_PACKET_FLAG_RELIABLE : 0;
 		ENetPacket* packet = enet_packet_create(_Data, _Size, flags);

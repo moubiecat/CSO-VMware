@@ -92,7 +92,7 @@ namespace cat {
          * This function blocks for a specified duration while waiting
          * for events, then returns control to the caller.
          */
-        virtual void poll() const = 0;
+        virtual void flush() const = 0;
     public:
         //< Host name or IP address for the listening endpoint
         const std::string host;

@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 		//
 		// Poll for incoming events
 		//
-		client.poll();
+		client.flush();
 	}
 	//
 	// Disconnect the server

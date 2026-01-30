@@ -26,7 +26,6 @@
 #ifndef _CORE_H_
 #define _CORE_H_
 
-#include <chrono>
 #include <cstdint>
 #include <string_view>
 #include "typing.h"
@@ -83,20 +82,16 @@ namespace cat::core {
 	 *
 	 * This function blocks for a specified duration while waiting
 	 * for events, then returns control to the caller.
-	 *
-	 * @param _WaitDuration The maximum duration to wait for events.
 	 */
-	void Core_enet_poll(std::chrono::milliseconds _WaitDuration = std::chrono::milliseconds(1000));
+	void Core_enet_poll();
 
 	/*
-	 * Sends a data packet to the connected peer.
-	 *
-	 * @param _Data Pointer to the data to be sent.
-	 * @param _Size Size of the data in bytes.
-	 * @param _Channel The channel number to send the packet on.
-	 * @param _Flags Flags controlling the packet's delivery behavior.
+	 * Sends queued outgoing packets to connected peers.
+	 * 
+	 * This function ensures that all pending data is transmitted
+	 * for both server and client hosts.
 	 */
-	void Core_enet_send(pdata_t _Data, std::size_t _Size, std::uint8_t _Channel, std::uint32_t _Flags);
+	void Core_enet_send();
 }
 
 #endif // ^^^ !_CORE_H_

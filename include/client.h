@@ -78,7 +78,7 @@ namespace cat {
 		 * This function checks for any new data or events and processes them
 		 * accordingly, allowing the client to respond to server communications.
 		 */
-		void poll() const override;
+		void flush() const override;
 
 		/*
 		 * Sends a packet to the connected server.

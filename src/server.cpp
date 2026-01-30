@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 		//
 		// Poll for incoming events
 		//
-		srv.poll();
+		srv.flush();
 	}
 	//
 	// Disconnect the server

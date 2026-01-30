@@ -79,7 +79,7 @@ namespace cat {
 		 * This function blocks for a specified duration while waiting
 		 * for events, then returns control to the caller.
 		 */
-		void poll() const override;
+		void flush() const override;
 
 		/*
 		 * Broadcasts a packet to all connected peers.
