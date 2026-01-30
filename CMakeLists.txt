@@ -51,6 +51,7 @@ include_directories ( "${PROJECT_SOURCE_DIR}/external/magic_args" )
 add_library ( DLL_CLIENT SHARED 
   "${PROJECT_SOURCE_DIR}/src/net.cpp" 
   "${PROJECT_SOURCE_DIR}/src/core.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/callbacks.cpp" 
   "${PROJECT_SOURCE_DIR}/src/client.cpp" 
 )
 target_link_libraries ( DLL_CLIENT PRIVATE enet )
@@ -61,6 +62,7 @@ set_target_properties ( DLL_CLIENT PROPERTIES OUTPUT_NAME "csovmware" )
 add_executable ( EXE_CLIENT 
   "${PROJECT_SOURCE_DIR}/src/net.cpp" 
   "${PROJECT_SOURCE_DIR}/src/core.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/callbacks.cpp" 
   "${PROJECT_SOURCE_DIR}/src/client_cli.cpp" 
 )
 target_link_libraries ( EXE_CLIENT PRIVATE enet )
@@ -74,6 +76,7 @@ set_target_properties ( EXE_CLIENT PROPERTIES
 add_executable ( EXE_SERVER 
   "${PROJECT_SOURCE_DIR}/src/net.cpp" 
   "${PROJECT_SOURCE_DIR}/src/core.cpp" 
+  "${PROJECT_SOURCE_DIR}/src/callbacks.cpp" 
   "${PROJECT_SOURCE_DIR}/src/users.cpp" 
   "${PROJECT_SOURCE_DIR}/src/server.cpp" 
 )
