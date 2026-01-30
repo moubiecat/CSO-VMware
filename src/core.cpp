@@ -190,4 +190,27 @@ namespace cat::core {
 		//	}
 		//}
 	}
+
+	/*
+		Sends a data packet to the connected peer.
+		
+		@param _Data Pointer to the data to be sent.
+		@param _Size Size of the data in bytes.
+		@param _Channel The channel number to send the packet on.
+		@param _Flags Flags controlling the packet's delivery behavior.
+	 */
+	void Core_enet_send(const void* _Data, std::size_t _Size, std::uint8_t _Channel, std::uint32_t _Flags) {
+		/*
+		enet_uint32 flags = _Reliable ? ENET_PACKET_FLAG_RELIABLE : 0;
+		ENetPacket* packet = enet_packet_create(_Data, _Size, flags);
+		if (packet == nullptr) {
+			throw std::runtime_error("Failed to create ENet packet for sending.");
+		}
+		int res = enet_peer_send(conn, _Channel, packet);
+		if (res != 0) {
+			enet_packet_destroy(packet);
+			throw std::runtime_error("Failed to send ENet packet.");
+		}
+		enet_host_flush(host);*/
+	}
 }

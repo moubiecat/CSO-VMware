@@ -2,7 +2,6 @@
 #include "core.h"
 #include "client.h"
 #include "server.h"
-#include "packet.h"
 
 namespace cat {
 	/*

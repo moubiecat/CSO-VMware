@@ -86,6 +86,16 @@ namespace cat::core {
 	 * @param _WaitDuration The maximum duration to wait for events.
 	 */
 	void Core_enet_poll(std::chrono::milliseconds _WaitDuration = std::chrono::milliseconds(1000));
+
+	/*
+	 * Sends a data packet to the connected peer.
+	 *
+	 * @param _Data Pointer to the data to be sent.
+	 * @param _Size Size of the data in bytes.
+	 * @param _Channel The channel number to send the packet on.
+	 * @param _Flags Flags controlling the packet's delivery behavior.
+	 */
+	void Core_enet_send(const void* _Data, std::size_t _Size, std::uint8_t _Channel, std::uint32_t _Flags);
 }
 
 #endif // ^^^ !_CORE_H_
