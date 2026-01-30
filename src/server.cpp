@@ -1,6 +1,7 @@
 #include <print>
 #include <magic_args/magic_args.hpp>
 #include "cli.h"
+#include "users.h"
 #include "server.h"
 
 int main(int argc, char* argv[]) {
@@ -8,6 +9,10 @@ int main(int argc, char* argv[]) {
 	// Parse command-line arguments
 	//
 	const auto args = magic_args::parse<cli::cmd_args>(argc, argv);
+	//
+	// Initialize user system
+	//
+	cat::setup_user_system();
 	//
 	// Create a server instance listening on localhost:8080
 	//
