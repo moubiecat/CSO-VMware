@@ -1,5 +1,6 @@
 #include "net.h"
 #include "core.h"
+#include "const.h"
 #include "client.h"
 #include "server.h"
 
@@ -32,7 +33,7 @@ namespace cat {
 	void
 	server::connect() const {
 		core::Core_enet_initialize();
-		core::Core_enet_server_create(host, port, 32);
+		core::Core_enet_server_create(host, port, MAX_USERS);
 		connecting = true;
 	}
 
