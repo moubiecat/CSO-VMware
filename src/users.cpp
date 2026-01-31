@@ -69,6 +69,21 @@ namespace cat {
 	}
 
 	/*
+		@brief Get the peer associated with a given user ID.
+		
+		@param _User The user ID whose peer is to be retrieved.
+		@return The peer associated with the given user ID.
+	 */
+	std::optional<peer_t> 
+	get_peer(const userid_t _User) noexcept {
+		if (_User < static_cast<userid_t>(users.size()) && users[_User].active) {
+			return users[_User].peer;
+		}
+
+		return std::nullopt;
+	}
+
+	/*
 		@brief Get a list of all user IDs.
 		
 		@return A vector containing all user IDs.
