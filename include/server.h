@@ -91,10 +91,10 @@ namespace cat {
 		/*
 		 * Sends a packet to a specific peer.
 		 *
-		 * @param _Packet Pointer to the packet to be sent.
 		 * @param _Peer   The target peer to which the packet should be sent.
+		 * @param _Packet Pointer to the packet to be sent.
 		 */
-		void sendto(const packet* _Packet, peer_t _Peer) const;
+		void sendto(peer_t _Peer, const packet* _Packet) const;
 	};
 }
 

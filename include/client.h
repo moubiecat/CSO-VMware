@@ -28,7 +28,6 @@
 
 #include "net.h"
 #include "packet.h"
-#include "typings.h"
 
 namespace cat {
 	/*
