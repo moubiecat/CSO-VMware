@@ -26,9 +26,9 @@
 #ifndef _SERVER_H_
 #define _SERVER_H_
 
+#include "const.h"
 #include "net.h"
 #include "packet.h"
-#include "typings.h"
 
 namespace cat {
 	/*
@@ -91,10 +91,10 @@ namespace cat {
 		/*
 		 * Sends a packet to a specific peer.
 		 *
-		 * @param _Peer   The target peer to which the packet should be sent.
+		 * @param _User   The target user to which the packet should be sent.
 		 * @param _Packet Pointer to the packet to be sent.
 		 */
-		void sendto(peer_t _Peer, const packet* _Packet) const;
+		void sendto(userid_t _User, const packet* _Packet) const;
 	};
 }
 

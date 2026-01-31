@@ -28,30 +28,22 @@
 
 #include <optional>
 #include <vector>
-#include "typings.h"
+#include "const.h"
 
 namespace cat {
 	/*
 	 * @brief Acquire a user ID for a given peer.
 	 *
 	 * @param _Peer The peer for which to acquire a user ID.
-	 * @return true if the user ID was successfully acquired, false otherwise.
+	 * @return The acquired user ID, or std::nullopt if acquisition failed.
 	 */
-	[[nodiscard]] bool acquire_user(const peer_t _Peer) noexcept;
-
-	/*
-	 * @brief Get the user ID associated with a given peer.
-	 *
-	 * @param _Peer The peer whose user ID is to be retrieved.
-	 * @return The user ID associated with the given peer.
-	 */
-	[[nodiscard]] std::optional<userid_t> get_userid(const peer_t _Peer) noexcept;
+	[[nodiscard]] std::optional<userid_t> acquire_user(const peer_t _Peer) noexcept;
 
 	/*
 	 * @brief Get the peer associated with a given user ID.
 	 *
 	 * @param _User The user ID whose peer is to be retrieved.
-	 * @return The peer associated with the given user ID.
+	 * @return The peer associated with the given user ID, or std::nullopt if not found.
 	 */
 	[[nodiscard]] std::optional<peer_t> get_peer(const userid_t _User) noexcept;
 
@@ -60,7 +52,7 @@ namespace cat {
 	 *
 	 * @return A vector containing all user IDs.
 	 */
-	[[nodiscard]] std::vector<userid_t> get_userids() noexcept;
+	[[nodiscard]] std::vector<userid_t> get_users() noexcept;
 
 	/*
 	 * @brief Release the user ID associated with a given peer.

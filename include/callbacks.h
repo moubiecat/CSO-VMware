@@ -27,7 +27,7 @@
 #define _CALLBACKS_H_
 
 #include <cstddef>
-#include "typings.h"
+#include "const.h"
 
 namespace cat::core {
 	/*

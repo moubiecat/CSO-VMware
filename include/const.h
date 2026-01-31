@@ -26,6 +26,17 @@
 #ifndef _CONST_H_
 #define _CONST_H_
 
+//
+// Define the maximum number of users supported by the server
+//
+
 constexpr int MAX_USERS = 32;
+
+//
+// Define custom types for better code readability
+//
+typedef void*			peer_t;
+typedef const void*		pdata_t;
+typedef unsigned int 	userid_t;
 
 #endif // ^^^ !_CONST_H_
