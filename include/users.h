@@ -32,40 +32,34 @@
 
 namespace cat {
 	/*
-	 * @brief Initialize the user management system.
+	 * @brief Acquire a user ID for a given peer.
+	 *
+	 * @param _Peer The peer for which to acquire a user ID.
+	 * @return true if the user ID was successfully acquired, false otherwise.
 	 */
-	void setup_user_system() noexcept;
+	[[nodiscard]] bool acquire_user(const peer_t _Peer) noexcept;
 
 	/*
-	 * @brief Acquire a new user ID.
+	 * @brief Get the user ID associated with a given peer.
 	 *
-	 * @param _Peer The peer to associate with the new user ID.
-	 * @return A newly acquired user ID, or std::nullopt if none are available.
+	 * @param _Peer The peer whose user ID is to be retrieved.
+	 * @return The user ID associated with the given peer.
 	 */
-	[[nodiscard]] std::optional<userid_t> acquire_user(const peer_t _Peer) noexcept;
+	[[nodiscard]] std::optional<userid_t> get_userid(const peer_t _Peer) noexcept;
 
 	/*
-	 * @brief Get the peer associated with a given user ID.
+	 * @brief Get a list of all user IDs.
 	 *
-	 * @param _User The user ID whose peer is to be retrieved.
-	 * @return The peer associated with the given user ID, or std::nullopt if the user ID is invalid or not in use.
+	 * @return A vector containing all user IDs.
 	 */
-	[[nodiscard]] std::optional<peer_t> get_user_peer(userid_t _User) noexcept;
+	[[nodiscard]] std::vector<userid_t> get_userids() noexcept;
 
 	/*
-	 * @brief Get a list of all currently active user IDs.
+	 * @brief Release the user ID associated with a given peer.
 	 *
-	 * @return A list of active user IDs.
+	 * @param _Peer The peer whose user ID is to be released.
 	 */
-	[[nodiscard]] std::vector<userid_t> get_users() noexcept;
-
-	/*
-	 * @brief Release a user ID, making it available for reuse.
-	 *
-	 * @param _Peer The peer whose associated user ID is to be released.
-	 * @return True if the user ID was successfully released, false otherwise.
-	 */
-	[[nodiscard]] std::optional<userid_t> release_user(const peer_t _Peer) noexcept;
+	void release_user(const peer_t _Peer) noexcept;
 }
 
 #endif // ^^^ !_USERS_H_

@@ -1,137 +1,100 @@
 #include <array>
 #include <cassert>
-#include <queue>
+#include <ranges>
+#include "const.h"
 #include "users.h"
 
 namespace cat {
 	/*
 		@brief Structure to hold user entry information.
 
-		@member in_use Indicates whether the user entry is currently in use.
+		@member active Indicates whether the user entry is currently active.
 		@member peer The peer associated with the user entry.
 	 */
 	struct user_entry {
-		bool in_use = false;
-		peer_t peer = nullptr;
+		bool active;
+		peer_t peer;
 	};
-	
-	/*
-		Global flag to ensure the user system is initialized only once.
-	 */
-	static bool initialized = false;
-
-	/* 	
-		Queue to manage available user IDs.
-		IDs are reused when users are released.
-	 */
-	static std::queue<userid_t> ids;
 
 	/*
 		Array to hold user entries.
-		Supports up to 32 concurrent users.
+		Size is defined by MAX_USERS constant.
 	 */
-	static std::array<user_entry, 32> users;
+	static std::array<user_entry, MAX_USERS> users;
 
 
 	/*
-		@brief Initialize the user management system.
+		@brief Find the user entry associated with a given peer.
+
+		@param peer The peer whose user entry is to be found.
+		@return An iterator to the user entry if found, otherwise users.end().
 	 */
-	void 
-	setup_user_system() noexcept {
-		while (!ids.empty()) {
-			ids.pop();
-		}
-
-		for (userid_t i = 0; i < users.size(); ++i) {
-			ids.push(i);
-			users[i] = {};
-		}
-
-		initialized = true;
+	static auto find_entry(const peer_t _Peer) noexcept {
+		return std::ranges::find_if(users, [_Peer](const auto& _Entry) {
+			return _Entry.active && _Entry.peer == _Peer; });
 	}
 
 	/*
-		@brief Acquire a new user ID.
+		@brief Acquire a user ID for a given peer.
+
+		@param _Peer The peer for which to acquire a user ID.
+		@return true if the user ID was successfully acquired, false otherwise.
+	 */
+	bool
+	acquire_user(const peer_t _Peer) noexcept {
+		assert(_Peer != nullptr && "peer must not be null");
+		auto it = std::ranges::find_if(users, [](const user_entry& entry) {
+			return !entry.active; });
+		if (it != users.end()) {
+			it->active = true;
+			it->peer = _Peer;
+			return true;
+		}
+		return false;
+	}
+
+	/*
+		@brief Get the user ID associated with a given peer.
 		
-		@param _Peer The peer to associate with the new user ID.
-		@return A newly acquired user ID, or std::nullopt if none are available.
+		@param _Peer The peer whose user ID is to be retrieved.
+		@return The user ID associated with the given peer.
 	 */
 	std::optional<userid_t> 
-	acquire_user(const peer_t _Peer) noexcept {
-		assert(initialized && "User system not initialized.");
-
-		if (ids.empty()) {
-			return std::nullopt;
+	get_userid(const peer_t _Peer) noexcept {
+		if (auto it = find_entry(_Peer); it != users.end()) {
+			return static_cast<userid_t>(std::distance(users.begin(), it));
 		}
 
-		const userid_t id = ids.front();
-		ids.pop();
-
-		auto& slot	= users[id];
-		slot.in_use = true;
-		slot.peer	= _Peer;
-		return id;
+		return std::nullopt;
 	}
 
 	/*
-		@brief Get the peer associated with a given user ID.
+		@brief Get a list of all user IDs.
 		
-		@param _User The user ID whose peer is to be retrieved.
-		@return The peer associated with the given user ID, or std::nullopt if the user ID is invalid or not in use.
+		@return A vector containing all user IDs.
 	 */
-	std::optional<peer_t> 
-	get_user_peer(userid_t _User) noexcept {
-		assert(initialized && "User system not initialized.");
-
-		if (_User >= users.size()) {
-			return std::nullopt;
-		}
-
-		const auto& slot = users[_User];
-		if (!slot.in_use) {
-			return std::nullopt;
-		}
-
-		return slot.peer;
-	}
-
-	/*
-		@brief Get a list of all currently active user IDs.
-		
-		@return A list of active user IDs.
-	 */
-	std::list<userid_t> 
-	get_active_users() noexcept {
-		assert(initialized && "User system not initialized.");
-
-		std::list<userid_t> res;
-		for (userid_t i = 0; i < users.size(); ++i) {
-			if (users[i].in_use) {
-				res.push_back(i);
+	std::vector<userid_t> 
+	get_userids() noexcept {
+		std::vector<userid_t> userids;
+		for (userid_t i = 0; i < static_cast<userid_t>(users.size()); ++i) {
+			if (users[i].active) {
+				userids.push_back(i);
 			}
 		}
-		return res;
+		return userids;
 	}
 
 	/*
-		@brief Release a previously acquired user ID.
-		
-		@param _User The user ID to release.
+		@brief Release the user ID associated with a given peer.
+
+		@param _Peer The peer whose user ID is to be released.
 	 */
-	void 
-	release_user(userid_t _User) noexcept {
-		assert(initialized && "User system not initialized.");
-
-		if (_User >= users.size()) {
-			return;
+	void
+	release_user(const peer_t _Peer) noexcept {
+		assert(_Peer != nullptr && "peer must not be null");
+		if (auto it = find_entry(_Peer); it != users.end()) {
+			it->active = false;
+			it->peer = nullptr;
 		}
-
-		auto& slot = users[_User];
-		if (!slot.in_use) {
-			return;
-		}
-
-		slot = {};
-		ids.push(_User);
 	}
 }
