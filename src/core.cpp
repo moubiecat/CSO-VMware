@@ -91,6 +91,17 @@ namespace cat::core {
 	}
 
 	/*
+		Kicks a connected peer from the host.
+
+		@param _Peer The peer to be disconnected.
+	 */
+	void
+	Core_enet_server_kick(void* _Peer) {
+		ENetPeer* peer = static_cast<ENetPeer*>(_Peer);
+		enet_peer_disconnect(peer, 0);
+	}
+
+	/*
 		Creates an ENet client host.
 		
 		@param _Chunm The maximum number of channels to be used for communication.

@@ -54,6 +54,13 @@ namespace cat::core {
 	void Core_enet_server_create(std::string_view _Host, std::uint32_t _Port, std::uint32_t _Cltnum);
 
 	/*
+	 * Kicks a connected peer from the host.
+	 *
+	 * @param _Peer The peer to be disconnected.
+	 */
+	void Core_enet_server_kick(void* _Peer);
+
+	/*
 	 * Creates an ENet client host.
 	 *
 	 * @param _Cltnum The maximum number of channels to be used for communication.
