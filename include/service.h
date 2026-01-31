@@ -39,7 +39,7 @@ namespace cat {
 	};
 
 	/* Service types for network events */
-	enum class service_type : std::uint8_t {
+	enum class enet_service : std::uint8_t {
 		enet_connect	= 1,
 		enet_disconnect = 2,
 		enet_message	= 3,
@@ -59,7 +59,7 @@ namespace cat {
 	public:
 		using param_t = enet_event&;
 		using callback_t = std::function<void(param_t)>;
-		using handlers_t = std::unordered_map<service_type, callback_t>;
+		using handlers_t = std::unordered_map<enet_service, callback_t>;
 	public:
 		/*
 		 * @brief Register or replace an event handler for a service type.
@@ -71,7 +71,7 @@ namespace cat {
 		 * @param cb   The callback to invoke when the event is dispatched.
 		 * @return Reference to this service instance (for chaining).
 		 */
-		service& on(service_type type, callback_t cb) {
+		service& on(enet_service type, callback_t cb) {
 			handlers[type] = std::move(cb);
 			return *this;
 		}
@@ -86,7 +86,7 @@ namespace cat {
 		 * @param type  The service type of the event.
 		 * @param event The ENet event to forward to the handler.
 		 */
-		void call(service_type type, param_t event) {
+		void call(enet_service type, param_t event) {
 			auto it = handlers.find(type);
 			if (it != handlers.end()) {
 				it->second(event);
@@ -107,7 +107,7 @@ namespace cat {
 		}
 	private:
 		//< The map of event handlers
-		std::unordered_map<service_type, callback_t> handlers;
+		std::unordered_map<enet_service, callback_t> handlers;
 	};
 }
 

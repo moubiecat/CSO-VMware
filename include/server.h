@@ -26,9 +26,7 @@
 #ifndef _SERVER_H_
 #define _SERVER_H_
 
-#include "const.h"
 #include "net.h"
-#include "packet.h"
 
 namespace cat {
 	/*
@@ -80,21 +78,6 @@ namespace cat {
 		 * for events, then returns control to the caller.
 		 */
 		void flush() const override;
-
-		/*
-		 * Broadcasts a packet to all connected peers.
-		 *
-		 * @param _Packet Pointer to the packet to be broadcasted.
-		 */
-		void broadcast(const packet* _Packet) const;
-
-		/*
-		 * Sends a packet to a specific peer.
-		 *
-		 * @param _User   The target user to which the packet should be sent.
-		 * @param _Packet Pointer to the packet to be sent.
-		 */
-		void sendto(userid_t _User, const packet* _Packet) const;
 	};
 }
 

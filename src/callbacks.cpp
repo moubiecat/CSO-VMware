@@ -13,7 +13,7 @@ namespace cat::core {
 		// Call the registered CONNECT callbacks
 		//
 		enet_event event{ _Peer, nullptr, 0 };
-		service::instance().call(service_type::enet_connect, event);
+		service::instance().call(enet_service::enet_connect, event);
 	}
 
 	/*
@@ -27,7 +27,7 @@ namespace cat::core {
 		// Call the registered DISCONNECT callbacks
 		//
 		enet_event event{ _Peer, nullptr, 0 };
-		service::instance().call(service_type::enet_disconnect, event);
+		service::instance().call(enet_service::enet_disconnect, event);
 	}
 
 	/*
@@ -43,6 +43,6 @@ namespace cat::core {
 		// Call the registered MESSAGE callbacks
 		//
 		enet_event event{ _Peer, _Data, _Size };
-		service::instance().call(service_type::enet_message, event);
+		service::instance().call(enet_service::enet_message, event);
 	}
 }

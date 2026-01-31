@@ -27,7 +27,6 @@
 #define _CLIENT_H_
 
 #include "net.h"
-#include "packet.h"
 
 namespace cat {
 	/*
@@ -78,13 +77,6 @@ namespace cat {
 		 * accordingly, allowing the client to respond to server communications.
 		 */
 		void flush() const override;
-
-		/*
-		 * Sends a packet to the connected server.
-		 *
-		 * @param _Packet Pointer to the packet to be sent.
-		 */
-		void send(const packet* _Packet) const;
 	};
 }
 

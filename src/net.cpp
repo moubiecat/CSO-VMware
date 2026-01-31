@@ -63,31 +63,6 @@ namespace cat {
 	}
 
 	/*
-		Broadcasts a packet to all connected peers.
-		
-		@param _Packet Pointer to the packet to be broadcasted.
-	 */
-	void 
-	server::broadcast(const packet* _Packet) const {
-		cat::ostream os;
-		_Packet->serialize(os);
-		//core::Core_enet_send(buffer.data(), buffer.size(), 0, 1);
-	}
-
-	/*
-		Sends a packet to a specific peer.
-		
-		@param _User   The target user to which the packet should be sent.
-		@param _Packet Pointer to the packet to be sent.
-	 */
-	void 
-	server::sendto(userid_t _User, const packet* _Packet) const {
-		cat::ostream os;
-		_Packet->serialize(os);
-		//core::Core_enet_send(buffer.data(), buffer.size(), 0, 0);
-	}
-
-	/*
 		Establishes a connection to the server.
 		
 		This function performs the necessary initialization and setup,
@@ -124,17 +99,5 @@ namespace cat {
 	client::flush() const {
 		core::Core_enet_poll();
 		core::Core_enet_send();
-	}
-
-	/*
-		Sends a packet to the connected server.
-		
-		@param _Packet Pointer to the packet to be sent.
-	 */
-	void 
-	client::send(const packet* _Packet) const {
-		cat::ostream os;
-		_Packet->serialize(os);
-		//core::Core_enet_send(buffer.data(), buffer.size(), 0, 0);
 	}
 }
