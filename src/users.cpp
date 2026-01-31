@@ -1,5 +1,4 @@
 #include <array>
-#include <cassert>
 #include <ranges>
 #include "const.h"
 #include "users.h"
@@ -36,35 +35,19 @@ namespace cat {
 
 	/*
 		@brief Acquire a user ID for a given peer.
-
+		
 		@param _Peer The peer for which to acquire a user ID.
-		@return true if the user ID was successfully acquired, false otherwise.
+		@return The acquired user ID, or std::nullopt if acquisition failed.
 	 */
-	bool
+	std::optional<userid_t> 
 	acquire_user(const peer_t _Peer) noexcept {
-		assert(_Peer != nullptr && "peer must not be null");
 		auto it = std::ranges::find_if(users, [](const user_entry& entry) {
 			return !entry.active; });
 		if (it != users.end()) {
 			it->active = true;
 			it->peer = _Peer;
-			return true;
-		}
-		return false;
-	}
-
-	/*
-		@brief Get the user ID associated with a given peer.
-		
-		@param _Peer The peer whose user ID is to be retrieved.
-		@return The user ID associated with the given peer.
-	 */
-	std::optional<userid_t> 
-	get_userid(const peer_t _Peer) noexcept {
-		if (auto it = find_entry(_Peer); it != users.end()) {
 			return static_cast<userid_t>(std::distance(users.begin(), it));
 		}
-
 		return std::nullopt;
 	}
 
@@ -72,7 +55,7 @@ namespace cat {
 		@brief Get the peer associated with a given user ID.
 		
 		@param _User The user ID whose peer is to be retrieved.
-		@return The peer associated with the given user ID.
+		@return The peer associated with the given user ID, or std::nullopt if not found.
 	 */
 	std::optional<peer_t> 
 	get_peer(const userid_t _User) noexcept {
@@ -89,7 +72,7 @@ namespace cat {
 		@return A vector containing all user IDs.
 	 */
 	std::vector<userid_t> 
-	get_userids() noexcept {
+	get_users() noexcept {
 		std::vector<userid_t> userids;
 		for (userid_t i = 0; i < static_cast<userid_t>(users.size()); ++i) {
 			if (users[i].active) {
@@ -101,12 +84,11 @@ namespace cat {
 
 	/*
 		@brief Release the user ID associated with a given peer.
-
+		
 		@param _Peer The peer whose user ID is to be released.
 	 */
-	void
+	void 
 	release_user(const peer_t _Peer) noexcept {
-		assert(_Peer != nullptr && "peer must not be null");
 		if (auto it = find_entry(_Peer); it != users.end()) {
 			it->active = false;
 			it->peer = nullptr;

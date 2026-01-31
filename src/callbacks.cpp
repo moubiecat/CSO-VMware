@@ -1,4 +1,5 @@
 #include "callbacks.h"
+#include "service.h"
 
 namespace cat::core {
 	/*
@@ -8,6 +9,11 @@ namespace cat::core {
 	 */
 	void 
 	OnConnect(peer_t _Peer) {
+		//
+		// Call the registered CONNECT callbacks
+		//
+		enet_event event{ _Peer, nullptr, 0 };
+		service::instance().call(service_type::enet_connect, event);
 	}
 
 	/*
@@ -17,6 +23,11 @@ namespace cat::core {
 	 */
 	void 
 	OnDisconnect(peer_t _Peer) {
+		//
+		// Call the registered DISCONNECT callbacks
+		//
+		enet_event event{ _Peer, nullptr, 0 };
+		service::instance().call(service_type::enet_disconnect, event);
 	}
 
 	/*
@@ -28,5 +39,10 @@ namespace cat::core {
 	 */
 	void 
 	OnMessage(peer_t _Peer, pdata_t _Data, std::size_t _Size) {
+		//
+		// Call the registered MESSAGE callbacks
+		//
+		enet_event event{ _Peer, _Data, _Size };
+		service::instance().call(service_type::enet_message, event);
 	}
 }

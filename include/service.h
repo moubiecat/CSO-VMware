@@ -40,33 +40,70 @@ namespace cat {
 
 	/* Service types for network events */
 	enum class service_type : std::uint8_t {
-		ENET_CONNECT	= 1,
-		ENET_DISCONNECT = 2,
-		ENET_MESSAGE	= 3,
+		enet_connect	= 1,
+		enet_disconnect = 2,
+		enet_message	= 3,
 	};
 
+	/*
+	 * @brief Lightweight event dispatch service.
+	 *
+	 * Provides a centralized registry for handling ENet-related events
+	 * based on service_type. Each service type can register a single
+	 * callback, which will be invoked when the corresponding event occurs.
+	 *
+	 * This class follows the singleton pattern and is intended to be used
+	 * as a global event router within the networking subsystem.
+	 */
 	class service {
 	public:
 		using param_t = enet_event&;
 		using callback_t = std::function<void(param_t)>;
 		using handlers_t = std::unordered_map<service_type, callback_t>;
 	public:
-
+		/*
+		 * @brief Register or replace an event handler for a service type.
+		 *
+		 * If a handler is already registered for the given type, it will
+		 * be replaced by the new callback.
+		 *
+		 * @param type The service type to associate with the handler.
+		 * @param cb   The callback to invoke when the event is dispatched.
+		 * @return Reference to this service instance (for chaining).
+		 */
 		service& on(service_type type, callback_t cb) {
-			handlers[type] = cb;
+			handlers[type] = std::move(cb);
 			return *this;
 		}
 
-		void call(service_type type, enet_event& event) {
+		/*
+		 * @brief Dispatch an event to the registered handler.
+		 *
+		 * Looks up the handler associated with the given service type
+		 * and invokes it if found. If no handler is registered, the
+		 * call is silently ignored.
+		 *
+		 * @param type  The service type of the event.
+		 * @param event The ENet event to forward to the handler.
+		 */
+		void call(service_type type, param_t event) {
 			auto it = handlers.find(type);
 			if (it != handlers.end()) {
 				it->second(event);
 			}
 		}
 
+		/*
+		 * @brief Get the singleton instance of the service.
+		 *
+		 * The instance is lazily initialized on first use and is
+		 * guaranteed to be thread-safe since C++11.
+		 *
+		 * @return Reference to the global service instance.
+		 */
 		static service& instance() {
-			static service inst;
-			return inst;
+			static service instance;
+			return instance;
 		}
 	private:
 		//< The map of event handlers

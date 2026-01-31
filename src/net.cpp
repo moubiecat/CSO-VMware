@@ -76,11 +76,11 @@ namespace cat {
 	/*
 		Sends a packet to a specific peer.
 		
+		@param _User   The target user to which the packet should be sent.
 		@param _Packet Pointer to the packet to be sent.
-		@param _Peer   The target peer to which the packet should be sent.
 	 */
 	void 
-	server::sendto(const packet* _Packet, peer_t _Peer) const {
+	server::sendto(userid_t _User, const packet* _Packet) const {
 		cat::ostream os;
 		_Packet->serialize(os);
 		//core::Core_enet_send(buffer.data(), buffer.size(), 0, 0);
